@@ -1,4 +1,5 @@
 css/reveal.scss
 css/reveal.css
-unit1.html
+images/*
 package-lock.json
+unit1.html

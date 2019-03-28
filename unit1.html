@@ -26,7 +26,7 @@
 			<div class="slides">
 				<section>
 				  <h2>Infrastructure as Code with Terraform and AWS</h2>
-				  <h2><em>Unit 1: Guest Networking</em></h2>
+				  <h2><em>Unit 1: Networking</em></h2>
 				  <p>This is an adapted version of this 18F
 						<a href="https://github.com/18F/12-factor-aws-terraform-training">workshop</a>. Both the original
 						and the adaption are in the worldwide public domain.
@@ -35,7 +35,7 @@
 				<section>
 				  <h2>Learning objectives</h2>
 				  <ul>
-				    <li>Understand AWS guest networking primitives and configuration</li>
+				    <li>Understand AWS networking primitives and configuration</li>
 				    <li>Be able to spin up an EC2 instance with terraform</li>
 		            <li>Know how to make an EC2 box public routable</li>
 				  </ul>
@@ -51,6 +51,7 @@ export AWS_REGION=eu-central-1
 aws configure set region eu-central-1 --profile <mark>[profile name]</mark>
 aws configure set mfa_serial "arn:aws:iam::<mark>[account id]</mark>:mfa/<mark>[user name]</mark>" --profile <mark>[profile name]</mark>
 aws-vault add free-tier --env
+aws-vault exec <mark>[profile name]</mark>
 // Finally, to see if our config works, let's deploy an ssh key
 ssh-keygen -f ~/.ssh/aws
 aws ec2 import-key-pair --key-name <mark>[key name]</mark> \
@@ -86,7 +87,7 @@ resource "aws_instance" "bastion" {
 				  <ul>
 				    <li>Create a directory called <code>terraform</code></li>
 				    <li>Save the file as <code>terraform/terraform.tf</code></li>
-				    <li>Run <code>terraform apply terraform</code></li>
+				    <li>Run <code>terraform init</code>, then <code>terraform apply</code></li>
 				    <li><code>grep '"id": "i-.*"' terraform.tfstate</code></li>
 				    <li>Go find your new EC2 instance in the console</li>
 				    <li>Try pinging it! Hmmm...</li>
@@ -98,7 +99,7 @@ resource "aws_instance" "bastion" {
 				<section>
 				  <h2>Now let's kill it</h2>
 				  <ul>
-				    <li>Run <code>terraform destroy terraform</code></li>
+				    <li>Run <code>terraform destroy</code></li>
 				    <li>This will take a while...</li>
 				    <li>...So let's talk about terraform state</li>
 				  </ul>
@@ -171,7 +172,7 @@ resource "aws_route_table_association" "route_subnet_1" {
 				  <ul>
 				    <li><code>terraform plan</code></li>
 				    <li>How cool is that!</li>
-				    <li><code>terraform apply terraform</code></li>
+				    <li><code>terraform apply</code></li>
 				    <li>(Note: <code>terraform apply</code> is idempotent)</li>
 				    <li>But... still can't ping our bastion. Boo!</li>
 				  </ul>
@@ -209,7 +210,7 @@ resource "aws_route_table_association" "route_subnet_1" {
     <mark>vpc_security_group_ids = ["${aws_security_group.bastion_sg.id}"]</mark>
 }</code></pre>
 				  <ul>
-				    <li><code>terraform apply terraform</code></li>
+				    <li><code>terraform apply</code></li>
 				    <li>...and now we can ping our host!</li>
 				  </ul>
 				</section>
@@ -223,7 +224,7 @@ resource "aws_route_table_association" "route_subnet_1" {
     }
 </code></pre>
 				  <ul>
-				    <li><code>terraform apply terraform</code></li>
+				    <li><code>terraform apply</code></li>
 				    <li>...and now we can ssh in too!</li>
 				    <li>Once you're in, try pinging Google</li>
 				    <li>Hmmm...</li>
@@ -239,7 +240,7 @@ resource "aws_route_table_association" "route_subnet_1" {
     }
 </code></pre>
 				  <ul>
-				    <li><code>terraform apply terraform</code></li>
+				    <li><code>terraform apply</code></li>
 				    <li>Now we can see out.</li>
 				    <li>By default, AWS lets you egress - but Terraform turns this off unless you declare it explicitly.</li>
 				  </ul>
