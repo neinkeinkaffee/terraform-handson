@@ -50,7 +50,7 @@ export AWS_REGION=eu-central-1
 // Or (with aws-vault)
 aws configure set region eu-central-1 --profile <mark>[profile name]</mark>
 aws configure set mfa_serial "arn:aws:iam::<mark>[account id]</mark>:mfa/<mark>[user name]</mark>" --profile <mark>[profile name]</mark>
-aws-vault add free-tier --env
+aws-vault add <mark>[profile name]</mark> --env
 aws-vault exec <mark>[profile name]</mark>
 // Finally, to see if our config works, let's deploy an ssh key
 ssh-keygen -f ~/.ssh/aws
@@ -72,7 +72,7 @@ resource "aws_subnet" "public_subnet_1" {
 }
 
 resource "aws_instance" "bastion" {
-    ami = "ami-c481fad3"
+    ami = "<mark>[ami id]</mark>"
     subnet_id = "${aws_subnet.public_subnet_1.id}"
     associate_public_ip_address = true
     key_name = "<mark>[key name]</mark>"

@@ -71,7 +71,7 @@
 				  <h2>Second availability zone</h2>
 				  <pre><code data-noescape>resource "aws_subnet" "public_subnet_2" {
     vpc_id = "${aws_vpc.workshop_vpc.id}"
-    availability_zone = "us-east-1d"
+    availability_zone = "eu-central-1b"
     cidr_block = "<mark>10.0.1.64/26</mark>"
 }
 
@@ -177,7 +177,7 @@ output "alb.dns" {
 				<section>
 				  <h2>Launch configuration</h2>
 				  <pre><code data-noescape>resource "aws_launch_configuration" "workshop_launch_conf" {
-    image_id = "ami-c481fad3"
+	image_id = "<mark>[ami id]</mark>"
     instance_type = "t2.micro"
     key_name = "<mark>[key name]</mark>"
     security_groups = ["${aws_security_group.web_sg.id}"]
@@ -210,7 +210,7 @@ EOF
 				<section>
 				  <h2>Unit 2 review</h2>
 				  <ul>
-				    <li class="fragment">We stood up an AWS load balancer and autoscale group</li>
+				    <li class="fragment">We stood up an AWS load balancer and autoscaling group</li>
 				    <li class="fragment">We deployed all the infrastructure required for a highly available web app</li>
 				    <li class="fragment">We provisioned everything purely from versioned Terraform config</li>
 				  </ul>
