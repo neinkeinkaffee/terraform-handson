@@ -188,7 +188,7 @@ output "alb.dns" {
     user_data = &lt;&lt;EOF
 #!/usr/bin/env bash
 yum update -y
-yum install -y httpd24
+yum install -y httpd
 service httpd start
 EOF
 }</code></pre>
